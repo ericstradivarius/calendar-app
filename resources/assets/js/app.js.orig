@@ -1,0 +1,330 @@
+
+/**
+ * First we will load all of this project's JavaScript dependencies which
+ * includes Vue and other libraries. It is a great starting point when
+ * building robust, powerful web applications using Vue and Laravel.
+ */
+
+import angular from 'angular';
+import config from './app.config';
+import moment from 'moment';
+import 'angular-ui-bootstrap';
+require('./bootstrap');
+require('./swiper.min');
+
+
+
+const app = angular.module('app', [
+    'ui.bootstrap',
+    'moment-picker',
+    'datetime'
+]);
+
+app.controller('calendarController', ['$scope', '$http', function($scope, $http) {
+
+    $scope.events = [];
+    $scope.event = {};
+    angular.extend($scope.event, config.events);
+
+    $scope.addEvent = function () {
+        $http({
+            method: 'post',
+            url: '/calendar-events',
+            headers: {
+
+            },
+            data: {
+                'title': $scope.event.title,
+                'description': $scope.event.description,
+                'starts_at': $scope.event.starts_at?$scope.event.starts_at.format("HH:mm:ss"):$scope.event.starts_at,
+                'ends_at':  $scope.event.ends_at?$scope.event.ends_at.format("HH:mm:ss"):$scope.event.ends_at,
+                'date_event': $scope.event.date_event?$scope.event.date_event.format("DD-MM-YYYY"):$scope.event.ends_at,
+                'user_id': ''
+            }
+        }).then(
+            function (response) {
+                $('#myModal').modal('hide');
+                $scope.event.title = '';
+                $scope.event.description = '';
+                $scope.event.starts_at = '';
+                $scope.event.ends_at = '';
+            },
+            function (error) {
+                $scope.addEventErrors = error.data.errors;
+            }
+        )
+    };
+
+    //Format data
+    $scope.formatDateEvent = function(event) {
+        return moment(event, "HH:mm:ss").format("HH:[00]");
+    }
+
+    /*Get current user id*/
+    $http({
+        method: 'get',
+        url: '/user',
+        headers: {
+            "accept":"application/json"
+        }
+    }).then(
+        function(response) {
+            $scope.userId = response.data.data.id;
+            $scope.currentDay($scope.userId);
+        }, function(error) {
+            console.log(error);
+        }
+    );
+    /*Switching between days in Angular*/
+
+    $scope.eventDay = moment().format("dddd");
+    $scope.eventDayAndMonth = moment().format("DD MMM");
+    $scope.filterTerm = moment().format("DD-MM-YYYY");
+
+    $scope.currentDay = function (userId) {
+
+
+        $http({
+            method: 'get',
+            url: '/calendar-events',
+            headers: {
+                "accept":"application/json"
+            },
+            params: {
+                'field[]': ['date_event','user_id'],
+                'op[]': ['eq','eq'],
+                'term[]': [$scope.filterTerm,userId]
+            }
+        }).then(
+            function (response) {
+                $scope.events = response.data.data;
+            },
+            function (error) {
+                console.log(error);
+            }
+        );
+
+    };
+
+
+    $scope.nextDay = function (userId) {
+
+        $scope.eventDay = moment($scope.eventDay,"ddd").add(1,'days').format("dddd");
+        $scope.eventDayAndMonth = moment($scope.eventDayAndMonth, "DD MMM").add(1, 'days').format("DD MMM");
+        $scope.filterTerm = moment($scope.filterTerm,"DD-MM-YYYY").add(1,'days').format("DD-MM-YYYY");
+
+        $http({
+            method: 'get',
+            url: '/calendar-events',
+            headers: {
+                "accept":"application/json"
+            },
+            params: {
+                'field[]': ['date_event','user_id'],
+                'op[]': ['eq','eq'],
+                'term[]': [$scope.filterTerm,userId]
+            }
+        }).then(
+            function (response) {
+                $scope.events = response.data.data;
+            },
+            function (error) {
+                console.log(error);
+            }
+        );
+
+    };
+
+
+<<<<<<< HEAD
+    $scope.prevDay = function () {
+        $scope.eventDay = moment($scope.eventDay, "dddd").subtract(1,'days').format("dddd");
+        $scope.eventDayAndMonth = moment($scope.eventDayAndMonth, "DD MMM").subtract(1, 'days').format("DD MMM");
+=======
+    $scope.prevDay = function (userId) {
+         $scope.eventDay = moment($scope.eventDay, "dddd").subtract(1,'days').format("dddd");
+         $scope.eventDayAndMonth = moment($scope.eventDayAndMonth, "DD MMM").subtract(1, 'days').format("DD MMM");
+>>>>>>> 680245f2a26a6d3d3714e20b0e38a7f354a301eb
+        $scope.filterTerm = moment($scope.filterTerm,"DD-MM-YYYY").subtract(1,'days').format("DD-MM-YYYY");
+
+        $http({
+            method: 'get',
+            url: '/calendar-events',
+            headers: {
+                "accept":"application/json"
+            },
+            params: {
+                'field[]': ['date_event','user_id'],
+                'op[]': ['eq','eq'],
+                'term[]': [$scope.filterTerm,userId]
+            }
+        }).then(
+            function (response) {
+                $scope.events = response.data.data;
+            },
+            function (error) {
+                console.log(error);
+            }
+        );
+    };
+
+
+
+}]);
+
+
+/*Controller for reading and writing comments from DB*/
+
+app.controller('newsFeedController', ['$scope', '$http', function($scope, $http) {
+
+    /*Showing comments in the news feed*/
+    angular.extend($scope.showComment, config.showComment);
+
+    $scope.showComment = function () {
+        $http({
+            method: 'get',
+            url: '/comments',
+            headers: {
+
+            },
+            data: {
+
+            }
+        }).then(
+            function (response) {
+                console.log(response);
+            },
+            function (error) {
+                $scope.errors = error.data.errors;
+            }
+        )
+    };
+
+    /*Write comments in news feed*/
+    angular.extend($scope.newComment(), config.newComment);
+
+    $scope.newComment = function () {
+        $http({
+            method: 'post',
+            url: '/comments',
+            headers: {
+
+            },
+            data: {
+                'text': $scope.newComment.text,
+                'calendar_event_id': $scope.newComment.calendar_event_id,
+                'user_id': $scope.newComment.user_id
+            }
+        }).then(
+            function (response) {
+                console.log(response);
+            },
+            function (error) {
+                $scope.errors = error.data.errors;
+            }
+        )
+    };
+
+    /*Show news feed from all other users*/
+
+    $scope.eventFeed = function () {
+        $http({
+            method: 'get',
+            url: '/calendar-events',
+            headers: {
+
+            }
+        }).then(
+            function (response) {
+                console.log(response);
+            },
+            function (error) {
+                $scope.errors = error.data.errors;
+            }
+        )
+    };
+
+}]);
+
+app.controller('recentActivityController', ['$scope', '$http', function($scope, $http) {
+
+    /*Showing comments in Recent Activity*/
+    $scope.showRecentObjects = [];
+    $scope.showRecentObject = {};
+    angular.extend($scope.showRecentObject, config.showRecent);
+
+    $scope.showRecent = function () {
+        $http({
+            method: 'get',
+            url: '/comments?with[]=user',
+            headers: { "accept": "application/json"
+            },
+            data: {}
+        }).then(
+            function (response) {
+                /*console.log(response.data.data[0].user.name);
+                console.log(response.data.data[0].text);*/
+
+                $scope.showRecentObjects = response.data.data;
+            },
+            function (error) {
+                $scope.errors = error.data.errors;
+            }
+        )
+    };
+
+    $scope.showRecent();
+
+
+}
+]);
+
+app.controller('updateProfileController', ['$scope', '$http', function($scope, $http) {
+    /*Update user profile*/
+
+    $scope.success=false;
+
+    $http({
+        method: 'get',
+        url: '/user',
+        headers: {},
+        param: {
+            'with[]': ['user']
+        }
+    }).then(
+        function (response) {
+            $scope.userId = response.data.data.id;
+
+            $scope.currentName =  response.data.data.name;
+            $scope.currentEmail =  response.data.data.email;
+            console.log($scope.currentName);
+            console.log($scope.currentEmail);
+        },
+        function (error) {
+            console.log(error);
+        }
+    );
+
+    $scope.updateProfile = function (userId) {
+
+        $http({
+            method: 'put',
+            url: '/users/' + userId,
+            headers: {},
+            data: {
+                "name": $scope.user_edit_name,
+                "email": $scope.user_edit_email
+            }
+        }).then(
+            function (response) {
+                console.log(response);
+                $scope.success=true;
+                $scope.errors=false;
+            },
+
+            function (error) {
+                $scope.errors = error.data.errors;
+            }
+        )
+    };
+}]);

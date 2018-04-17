@@ -1,0 +1,106 @@
+@import "variables";
+
+.login-navbar{
+  margin: 0 auto;
+}
+
+.panel-heading{
+  font-family: $font-family-sans-serif;
+  line-height: 40px;
+  font-size: 30px;
+  padding: 40px;
+  color: #4E599F;
+}
+
+.panel-body{
+  font-family: $font-family-sans-serif;
+}
+
+.login-page {
+  margin: 0 auto;
+  padding: 60px 0;
+  text-align: center;
+  background: #EFEEEC;
+
+}
+
+.form-group{
+  margin: 10px 0;
+  font-family: $font-family-sans-serif;
+  color: #8D91AD;
+
+}
+
+.label-form-text{
+  font-family: $font-family-sans-serif;
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 500;
+  display: inline-block;
+  padding: 5px 0;
+}
+
+input{
+  font-size: 20px;
+  width: auto;
+  height: auto;
+  padding: 10px 20px;
+}
+
+.submit-button, .register-button{
+  padding: 10px 40px;
+  margin: 10px;
+  background-color: #4E599F;
+  border: 0;
+  color: #FFFFFF;
+  font-family: $font-family-sans-serif;
+  font-size: 14px;
+}
+
+ul.dropdown-menu.logout-button{
+  text-align: center;
+  padding: 10px 20px;
+  text-align: center;
+  margin: 10px 0 0 0;
+}
+
+.logout-button{
+  background: #4E599F;
+  color: #FFFFFF;
+}
+
+.logout-button a{
+  color: #FFFFFF;
+}
+
+.dropdown-menu.logout-button li{
+  padding: 0;
+}
+
+a.dropdown-toggle{
+  color: #4E599F;
+}
+
+.forgot-link{
+  padding: 20px 0;
+  color: #8D91AD;
+  display: block;
+}
+ul.nav.navbar-nav.navbar-right{
+  list-style: none;
+  font-family: 'Raleway', sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 0;
+  text-align: right;
+  display: block;
+}
+
+.navbar-right li{
+  display: inline-block;
+  padding: 10px 0 10px 20px;
+}
+
+span.help-block{
+  display: block;
+}

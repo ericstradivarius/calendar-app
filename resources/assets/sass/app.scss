@@ -1,0 +1,51 @@
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+
+/* Login form design */
+@import "login";
+
+/* Swiper */
+@import "swiper";
+
+/*Left side - calendar */
+@import "leftside";
+
+
+/* Right side - calendar */
+@import "rightside";
+
+/* Variables */
+@import "variables";
+
+.intern {
+    background-color: #bbbec8;
+
+    .calendar-container {
+      padding-left: 0;
+      padding-right: 0;
+      padding-top: 85px;
+      padding-bottom: 85px;
+
+      .calendar {
+          margin: 0;
+
+          .left-side {
+            padding: 0;
+            margin: 0;
+          }
+      }
+
+    }
+}
+
+.container {
+  @media screen and (min-width: 1500px) {
+    width: 1300px;
+  }
+}
+
+.container .calendar{
+  height:700px;
+  background: #000;
+}
+

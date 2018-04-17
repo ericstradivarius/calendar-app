@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="{{ app()->getLocale() }}">
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
+        <title>Laravel</title>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <title>To Do List</title>
+
+        <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+              rel="stylesheet">
+
+
+
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link type="text/css" rel="stylesheet" href="{{ asset('css/app.css') }}">
+
+        <script src="js/app.js"></script>
+
+    </head>
+    <body ng-app="app">
+
+
+      <section class="intern">
+          <div class="container calendar-container">
+              <div class="row calendar">
+
+                  <div class="col-md-5 left-side" ng-controller="calendarController">
+                      <div class="left-side-event-container">
+
+                          <div class="row add-event">
+
+                              <div class="col-md-3">
+                                  <img src="http://via.placeholder.com/97x116" alt="My avatar">
+                              </div>
+                              <div class="col-md-9">
+                                  <a href="#" data-toggle="modal" data-target="#myModal">What is your next event?</a>
+                              </div>
+
+                              <!-- Modal -->
+                              <div id="myModal" class="modal fade" role="dialog">
+                                  <div class="modal-dialog">
+
+                                      <!-- Modal content-->
+                                      <div class="modal-content">
+                                          <div class="modal-header">
+                                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+<<<<<<< HEAD
+                                              <h4 class="modal-title">Assign your next appointment</h4>
+=======
+                                              <h4 class="modal-title">Create Event</h4>
+>>>>>>> 87173ddd7602fc718c32f2b4c9009343940b3ae8
+                                          </div>
+                                          <div class="modal-body">
+                                              <label for="">Event</label>
+                                              <input type="text" ng-model="event.title" class="form-control">
+                                              <label for="">Starts at(H:m:AM/PM)</label>
+
+
+
+                                              <input type="time" ng-model="event.starts_at" class="form-control">
+                                              <label for="">Ends at(H:m:AM/PM)</label>
+                                              <input type="time" ng-model="event.ends_at" class="form-control">
+                                              <div uib-datepicker ng-model="event.date" class="well well-sm" datepicker-options="options"></div>
+
+                                              <ul ng-show="errors" style="color: red; margin-top: 15px; list-style-type: none; padding-left: 0">
+                                                 <li ng-repeat="error in errors" ng-bind="error[0]"></li>
+                                              </ul>
+                                          </div>
+                                          <div class="modal-footer">
+                                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                              <button type="button" class="btn btn-success" ng-click="addEvent()">Save</button>
+                                          </div>
+                                      </div>
+
+                                  </div>
+                              </div>
+
+                          </div>
+
+                          <div class="row events-content">
+
+                              <div class="events-content-container">
+
+                                  <div class="title">
+
+                                          <h3 >
+                                             <small ng-bind="myDateEvent | date:'EEEE'"></small>
+                                              <span ng-bind="myDateEvent | date:'dd MMM'"></span>
+                                          </h3>
+
+
+                                        <div class="icons-container">
+                                            <a href="#" ng-click="prevDay()"><i class="material-icons">keyboard_arrow_left</i></a>
+                                            <a href="#" ng-click="nextDay()"><i class="material-icons">keyboard_arrow_right</i></a>
+                                        </div>
+
+                                  </div>
+
+                                  <div>
+
+                                  </div>
+
+                                  <div class="events-content-content">
+
+                                      <dl>
+                                          <dt>13:00 - 14:00</dt>
+                                          <dd>Lunch with Petr</dd>
+                                          <dt>17:00 - 19:00</dt>
+                                          <dd>Drink with Jessica</dd>
+                                          <dt>20:00 - 00:00</dt>
+                                          <dd>Birthday party</dd>
+                                      </dl>
+
+                                  </div>
+
+                              </div>
+
+
+
+                          </div>
+
+                     </div>
+                  </div>
+
+                  <div class="col-md-7 news right-side">
+                      <div class="row feed-title padding-56px">
+
+                          <div class="feed-title-h3">Feed</div>
+
+                          <div class="dropdown">
+                              <button class="btn btn-primary dropdown-toggle edit-profile" type="button" data-toggle="dropdown"> <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span> </button>
+                              <ul class="dropdown-menu">
+                                  <li><a href="#">Edit Profile</a></li>
+                                  <li><a href="#">Log Out</a></li>
+                              </ul>
+                          </div>
+                      </div>
+                      <div class="row feed-content">
+                          <div class="col-md-8 news-feed">
+                              <div class="feed-post padding-56px padding-top-bottom">
+                                  <span class="post-date">28 Sept - 19:00</span>
+                                  <h3 class="post-title">My first date from Tinder</h3>
+                                  <div class="post-author">
+                                      <img src="http://via.placeholder.com/25x25" alt="Author avatar" />
+                                      <span class="author-name">Rebecca Hart</span>
+                                  </div>
+                              </div>
+
+                          </div>
+                          <div class="col-md-4 recent-activity">
+                              <h4>Recent activity</h4>
+                              <div class="activity-user">
+                                  <img src="http://via.placeholder.com/30x30">
+                                  <div class="activity-div">
+                                      <span class="user-name">Peter Novak</span> liked Daniel's event
+                                  </div>
+                              </div>
+
+
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </section>
+
+    </body>
+</html>
